@@ -1,6 +1,5 @@
-# PROVISIONAL — one-day; replaced after adjudication
+# one-day — body shows a one-day shift, no month flip. Adjudicated from the body.
 R-41202
 R-41209
-R-41236
 R-41344
 R-41620

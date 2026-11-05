@@ -10,7 +10,7 @@
   {
    "key": "parser",
    "title": "Shared date parser reads day-first dates month-first",
-   "reports": 374,
+   "reports": 375,
    "tenants": [
     "alder.physio",
     "copper.studio",
@@ -25,13 +25,13 @@
     "stone.and.sons"
    ],
    "channels": {
-    "app": 202,
+    "app": 203,
     "email": 147,
     "form": 25
    },
    "intakeTag": {
     "hint": 23,
-    "parser": 351
+    "parser": 352
    },
    "firstSeen": "2026-04-01",
    "lastSeen": "2026-10-04",
@@ -67,6 +67,7 @@
     "R-41233",
     "R-41234",
     "R-41235",
+    "R-41236",
     "R-41237",
     "R-41238",
     "R-41239",
@@ -469,27 +470,25 @@
   {
    "key": "one-day",
    "title": "Bookings land one day off (timezone), no month change",
-   "reports": 5,
+   "reports": 4,
    "tenants": [
     "alder.physio",
     "kettle.books",
     "lantern.row",
-    "nine.lanterns",
     "pale.harbour"
    ],
    "channels": {
-    "app": 2,
+    "app": 1,
     "email": 3
    },
    "intakeTag": {
-    "parser": 5
+    "parser": 4
    },
    "firstSeen": "2026-04-02",
    "lastSeen": "2026-10-04",
    "ids": [
     "R-41202",
     "R-41209",
-    "R-41236",
     "R-41344",
     "R-41620"
    ]

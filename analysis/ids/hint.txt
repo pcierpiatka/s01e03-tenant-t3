@@ -1,4 +1,4 @@
-# PROVISIONAL — hint; replaced after adjudication
+# hint — day/month swap via the booking-v3 form hint. Blind read = swap and kb rule = hint (form channel at a booking-v3 tenant).
 R-41230
 R-41241
 R-41251
