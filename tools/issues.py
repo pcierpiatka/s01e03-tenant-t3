@@ -20,7 +20,7 @@ WHAT = {
              "The kb's own `causeOf` already separates it; the old #4471 page rendered it as 'no ticket of its own'.",
              "Change the booking-v3 hint to the tenant's order, or make the form read what the hint says."),
     'one-day': ("These bodies show no day/month swap. The booking lands one day off, or two people in different places see different days "
-                "for the same meeting. The desk's notes read them as a one-day move "
+                "for the same meeting, or an invite arrives before the booking it belongs to. The desk's notes read them as a one-day move "
                 "but filed them under the parser by tenant. A parser fix will not touch them; this looks like a timezone or day-boundary bug.",
                 "Reproduce with a tenant and a client in different timezones; check how the invite's date is derived from the booking's instant."),
 }

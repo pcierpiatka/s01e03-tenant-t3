@@ -1,4 +1,5 @@
-# one-day — body shows a one-day shift, no month flip. Adjudicated from the body.
+# one-day — body shows a one-day shift, no month flip. Adjudicated from the body, plus R-41236 as the desk's exported note files it (claim 1 desk reply).
+R-41236
 R-41202
 R-41209
 R-41344
