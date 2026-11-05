@@ -4,7 +4,7 @@
 
 ## What it is
 
-These bodies show no day/month swap. The booking lands one day off, or two people in different places see different days for the same meeting, or an invite arrives the day before the booking. The desk's notes read them as a one-day move but filed them under the parser by tenant. A parser fix will not touch them; this looks like a timezone or day-boundary bug.
+These bodies show no day/month swap. The booking lands one day off, or two people in different places see different days for the same meeting. The desk's notes read them as a one-day move but filed them under the parser by tenant. A parser fix will not touch them; this looks like a timezone or day-boundary bug.
 
 ## Where it shows
 
