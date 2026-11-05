@@ -25,14 +25,24 @@
       };
     })
   );
-  const placed = $derived(rows.reduce((n, r) => n + r.count, 0));
-  const twice = $derived(problems.problems.flatMap((p) => p.ids).length - new Set(problems.problems.flatMap((p) => p.ids)).size);
-  const ok = $derived(placed === merged.length && twice === 0 && rows.every((r) => r.missing === 0));
+  // Base problems partition the merged reports; an overlay problem is filed under a base problem
+  // and counted there too (the desk's own view: readAs + desk-notes).
+  const base = $derived(rows.filter((r) => !r.filedUnder));
+  const placed = $derived(base.reduce((n, r) => n + r.count, 0));
+  const baseIds = $derived(base.flatMap((p) => p.ids));
+  const twice = $derived(baseIds.length - new Set(baseIds).size);
+  const overlayOk = $derived(
+    rows.filter((r) => r.filedUnder).every((r) => {
+      const under = new Set(problems.problems.find((p) => p.key === r.filedUnder)?.ids ?? []);
+      return r.ids.every((id) => under.has(id));
+    })
+  );
+  const ok = $derived(placed === merged.length && twice === 0 && overlayOk && rows.every((r) => r.missing === 0));
 </script>
 
 <p class="sum">
   <strong>{merged.length}</strong> reports merged into #{ticket} ·
-  <strong>{rows.length}</strong> problems · {placed} placed, each once
+  <strong>{rows.length}</strong> problems · {placed} placed once between the first two; the third is counted where the desk files it
 </p>
 
 <table>
@@ -42,7 +52,7 @@
   <tbody>
     {#each rows as r (r.key)}
       <tr>
-        <td><code>{r.key}</code> · {r.title}</td>
+        <td><code>{r.key}</code> · {r.title}{#if r.filedUnder}<span class="tags"> · filed under <code>{r.filedUnder}</code>, counted there too</span>{/if}</td>
         <td>{r.count}</td>
         <td class="tags">{r.channels}</td>
         <td>{r.tenants}</td>
@@ -53,7 +63,7 @@
 </table>
 
 {#if !ok}
-  <p class="warn">The id lists do not add up: {placed} placed of {merged.length}, {twice} ids placed twice. Re-run tools/counts.py.</p>
+  <p class="warn">The id lists do not add up: {placed} placed of {merged.length}, {twice} ids placed twice, overlay inside its base: {overlayOk}. Re-run tools/counts.py.</p>
 {/if}
 
 <style>

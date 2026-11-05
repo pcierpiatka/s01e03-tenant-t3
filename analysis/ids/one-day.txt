@@ -1,4 +1,4 @@
-# one-day — body shows a one-day shift, no month flip. Adjudicated from the body, plus R-41236 as the desk's exported note files it (claim 1 desk reply).
+# one-day — the desk's own note (desk-notes.json oneDayMove): reports read as a one-day move. Filed under parser by tenant, counted there, and footnoted; this ticket covers them as their own problem. Subset of parser.txt.
 R-41236
 R-41202
 R-41209

@@ -19,7 +19,7 @@ Change the booking-v3 hint to the tenant's order, or make the form read what the
 
 ## How the count was made
 
-Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that each of the 412 reports is in exactly one problem. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
+Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that `parser` and `hint` together cover each of the 412 reports exactly once, and that `one-day` is counted where the desk files it. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
 
 <details><summary>Report ids (33)</summary>
 

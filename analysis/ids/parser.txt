@@ -1,11 +1,13 @@
-# parser — day/month swap by the shared parser. Blind read = swap and kb rule = parser, plus adjudicated fallbacks (R-41290 R-41417 R-41514 R-41615).
+# parser — day/month swap by the shared parser, counted the desk's way: every day-first report that is not `hint`, including the 5 the desk reads as a one-day move (filed here, footnoted; see one-day.txt).
 R-41200
 R-41201
+R-41202
 R-41203
 R-41204
 R-41205
 R-41206
 R-41208
+R-41209
 R-41210
 R-41211
 R-41212
@@ -30,6 +32,7 @@ R-41232
 R-41233
 R-41234
 R-41235
+R-41236
 R-41237
 R-41238
 R-41239
@@ -127,6 +130,7 @@ R-41340
 R-41341
 R-41342
 R-41343
+R-41344
 R-41345
 R-41346
 R-41347
@@ -373,3 +377,4 @@ R-41616
 R-41617
 R-41618
 R-41619
+R-41620

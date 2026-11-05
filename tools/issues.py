@@ -28,7 +28,13 @@ WHAT = {
 for p in counts['problems']:
     what, fix = WHAT[p['key']]
     ids = p['ids']
-    body = f"""**Reports covered: {p['reports']}** of the {counts['merged']} merged into #{counts['ticket']} (export sha256 `{counts['sha256'][:12]}…`, {counts['rows']} rows, {counts['duplicateRows']} duplicate rows dropped by id).
+    overlay = next((q for q in counts['problems'] if q.get('filedUnder') == p['key']), None)
+    note = ''
+    if overlay:
+        note = f" {overlay['reports']} of them are the reports the desk reads as a one-day move: they are filed here by tenant and counted here, as the kb's own table does, and they also have their own ticket for the `{overlay['key']}` problem."
+    if p.get('filedUnder'):
+        note = f" These {p['reports']} are filed under `{p['filedUnder']}` by tenant and counted there too, as the kb's own table does (footnote 'read as a one-day move'); this ticket is the problem itself."
+    body = f"""**Reports covered: {p['reports']}** of the {counts['merged']} merged into #{counts['ticket']} (export sha256 `{counts['sha256'][:12]}…`, {counts['rows']} rows, {counts['duplicateRows']} duplicate rows dropped by id).{note}
 
 ## What it is
 
@@ -47,7 +53,7 @@ for p in counts['problems']:
 
 ## How the count was made
 
-Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that each of the {counts['merged']} reports is in exactly one problem. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
+Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that `parser` and `hint` together cover each of the {counts['merged']} reports exactly once, and that `one-day` is counted where the desk files it. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
 
 <details><summary>Report ids ({len(ids)})</summary>
 

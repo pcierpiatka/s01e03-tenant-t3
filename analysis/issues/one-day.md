@@ -1,6 +1,6 @@
 [#4471 split] Bookings land one day off (timezone), no month change (5 reports)
 
-**Reports covered: 5** of the 412 merged into #4471 (export sha256 `2bd8489da70d…`, 427 rows, 15 duplicate rows dropped by id).
+**Reports covered: 5** of the 412 merged into #4471 (export sha256 `2bd8489da70d…`, 427 rows, 15 duplicate rows dropped by id). These 5 are filed under `parser` by tenant and counted there too, as the kb's own table does (footnote 'read as a one-day move'); this ticket is the problem itself.
 
 ## What it is
 
@@ -19,7 +19,7 @@ Reproduce with a tenant and a client in different timezones; check how the invit
 
 ## How the count was made
 
-Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that each of the 412 reports is in exactly one problem. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
+Every body was read blind (no intake tag, no desk note) and classified by what it says; where the body and the kb's rule disagreed, an adjudicator and a second reader placed it. `tools/counts.py` in this repo is the only source of these numbers and checks that `parser` and `hint` together cover each of the 412 reports exactly once, and that `one-day` is counted where the desk files it. Page: `src/routes/kb/incidents/4471-what-it-shows/+page.svx`.
 
 <details><summary>Report ids (5)</summary>
 

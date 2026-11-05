@@ -46,9 +46,10 @@ Monday 11 May", "Tuesday 6 October showed as Monday", a client in Lisbon and a c
 Toronto holding the same meeting on different days, every June booking one day off. The
 desk's notes already read them as a one-day move but filed them under `parser` by tenant.
 They are not a date-order bug. They look like a timezone or day-boundary bug, and a parser
-fix will not touch them. The desk's fifth note, R-41236 ("the invite arrived before I made
-the booking"), shows no date in its body; it is counted here as the desk's exported note
-files it, a one-day move.
+fix will not touch them. The desk's note is the list we use, including R-41236 ("the invite
+arrived before I made the booking"), whose body shows no date. They stay filed under
+`parser` by tenant and are counted there, as the kb's own table does; this ticket covers
+them as their own problem so the fix is not lost in the footnote.
 
 ## How we counted
 
@@ -57,8 +58,12 @@ files it, a one-day move.
 - Where the body and the kb's rule disagreed, an adjudicator placed the report and a second
   reader re-read it with a seeded sample of the rest.
 - Bodies with no dates at all were placed by the kb's rule for their tenant and channel.
+- Counts follow the desk's own view, as exported: `parser` and `hint` split the 412 the way
+  `causeOf` does, and the one-day reports are filed under `parser` and footnoted (`readAs`),
+  so they are counted there and in their own ticket.
 - The table above is computed from the id lists at render time. The same lists feed
-  `tools/counts.py`, which checks that every report is placed exactly once.
+  `tools/counts.py`, which checks that `parser` and `hint` place every report exactly once and
+  that every one-day report is filed under `parser`.
 
 ## What to change
 

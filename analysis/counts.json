@@ -10,7 +10,8 @@
   {
    "key": "parser",
    "title": "Shared date parser reads day-first dates month-first",
-   "reports": 374,
+   "filedUnder": null,
+   "reports": 379,
    "tenants": [
     "alder.physio",
     "copper.studio",
@@ -25,24 +26,26 @@
     "stone.and.sons"
    ],
    "channels": {
-    "app": 202,
-    "email": 147,
+    "app": 204,
+    "email": 150,
     "form": 25
    },
    "intakeTag": {
     "hint": 23,
-    "parser": 351
+    "parser": 356
    },
    "firstSeen": "2026-04-01",
    "lastSeen": "2026-10-04",
    "ids": [
     "R-41200",
     "R-41201",
+    "R-41202",
     "R-41203",
     "R-41204",
     "R-41205",
     "R-41206",
     "R-41208",
+    "R-41209",
     "R-41210",
     "R-41211",
     "R-41212",
@@ -67,6 +70,7 @@
     "R-41233",
     "R-41234",
     "R-41235",
+    "R-41236",
     "R-41237",
     "R-41238",
     "R-41239",
@@ -164,6 +168,7 @@
     "R-41341",
     "R-41342",
     "R-41343",
+    "R-41344",
     "R-41345",
     "R-41346",
     "R-41347",
@@ -409,12 +414,14 @@
     "R-41616",
     "R-41617",
     "R-41618",
-    "R-41619"
+    "R-41619",
+    "R-41620"
    ]
   },
   {
    "key": "hint",
    "title": "booking-v3 form hint says MM/DD/YYYY, form reads the date day-first",
+   "filedUnder": null,
    "reports": 33,
    "tenants": [
     "alder.physio",
@@ -469,6 +476,7 @@
   {
    "key": "one-day",
    "title": "Bookings land one day off (timezone), no month change",
+   "filedUnder": "parser",
    "reports": 5,
    "tenants": [
     "alder.physio",

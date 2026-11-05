@@ -24,6 +24,10 @@ PROBLEMS = [
     ('hint', 'booking-v3 form hint says MM/DD/YYYY, form reads the date day-first'),
     ('one-day', 'Bookings land one day off (timezone), no month change'),
 ]
+# The desk's own view (src/lib/kb/causes.ts readAs + desk-notes.json): the one-day reports are filed
+# under parser by tenant, counted there and footnoted. So `one-day` is an overlay on `parser`:
+# parser and hint partition the merged reports; one-day is a subset of parser.
+OVERLAY = {'one-day': 'parser'}
 
 
 def fail(msg):
@@ -53,21 +57,26 @@ def main():
             fail(f'{key}: duplicate ids in list')
         lists[key] = ids
 
-    # Invariants: every id is a real merged report; lists are disjoint; together they cover all of them.
-    seen = Counter()
+    # Invariants: every id is a real merged report; the base problems are disjoint and cover all of
+    # them; each overlay problem is a subset of the problem it is filed under.
     for key, ids in lists.items():
         for i in ids:
             if i not in by_id:
                 fail(f'{key}: {i} is not a report merged into #{TICKET}')
-            seen[i] += 1
+    base = {k: v for k, v in lists.items() if k not in OVERLAY}
+    seen = Counter(i for ids in base.values() for i in ids)
     twice = [i for i, n in seen.items() if n > 1]
     if twice:
-        fail(f'ids in more than one problem: {twice}')
+        fail(f'ids in more than one base problem: {twice}')
     missing = sorted(set(by_id) - set(seen))
     if missing:
-        fail(f'{len(missing)} merged reports in no problem: {missing[:10]}')
-    if sum(len(v) for v in lists.values()) != len(merged):
-        fail('sum of problem counts != merged count')
+        fail(f'{len(missing)} merged reports in no base problem: {missing[:10]}')
+    if sum(len(v) for v in base.values()) != len(merged):
+        fail('sum of base problem counts != merged count')
+    for key, under in OVERLAY.items():
+        outside = sorted(set(lists[key]) - set(lists[under]))
+        if outside:
+            fail(f'{key}: {outside} not filed under {under}')
 
     problems = []
     for key, title in PROBLEMS:
@@ -76,6 +85,7 @@ def main():
         problems.append({
             'key': key,
             'title': title,
+            'filedUnder': OVERLAY.get(key),
             'reports': len(rs),
             'tenants': sorted({r['tenant'] for r in rs}),
             'channels': dict(sorted(Counter(r['channel'] for r in rs).items())),
@@ -96,10 +106,11 @@ def main():
     }
     OUT_JSON.write_text(json.dumps(out, indent=1) + '\n')
     OUT_DATA.write_text(json.dumps({'ticket': TICKET, 'sha256': out['sha256'], 'rows': out['rows'], 'merged': out['merged'],
-                                    'problems': [{k: p[k] for k in ('key', 'title', 'reports', 'ids')} for p in problems]}, indent=1) + '\n')
+                                    'problems': [{k: p[k] for k in ('key', 'title', 'filedUnder', 'reports', 'ids')} for p in problems]}, indent=1) + '\n')
     print(f'rows {out["rows"]}  unique {out["unique"]}  merged into #{TICKET} {out["merged"]}  (dup rows {out["duplicateRows"]})')
     for p in problems:
-        print(f'  {p["key"]:8} {p["reports"]:4}  tenants {len(p["tenants"])}  {p["firstSeen"]} → {p["lastSeen"]}  {p["title"]}')
+        under = f' (filed under {p["filedUnder"]}, counted there too)' if p['filedUnder'] else ''
+        print(f'  {p["key"]:8} {p["reports"]:4}  tenants {len(p["tenants"])}  {p["firstSeen"]} → {p["lastSeen"]}  {p["title"]}{under}')
     print('invariants ok')
 
 
