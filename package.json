@@ -1,0 +1,17 @@
+{
+  "name": "s01e03-tenant-t3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "counts": "python3 -I tools/counts.py"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.8",
+    "@sveltejs/kit": "^2.20.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "mdsvex": "^0.12.3",
+    "svelte": "^5.25.0",
+    "vite": "^6.2.0"
+  }
+}

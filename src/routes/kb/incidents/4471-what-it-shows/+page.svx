@@ -1,0 +1,66 @@
+---
+layout: runbook
+title: '#4471 · what it shows: three problems, not one'
+owner: pcierpiatka
+status: proposed
+reviewed: 2026-11-05
+signature: 'v1.eyJzdG9yeSI6Im9mZiIsInN1YiI6Ijg2NTciLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5Mzg5MjA0OCwiZXhwIjoxNzkzOTc4NDQ4fQ.wmuFLlMZ0aHvY-SDfnFjVgRfUNVtxqwgBKdZe6jW2QU'
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject)).
+Nobody had to read the bodies, so nobody did. We read all of them. The ticket holds three problems.
+Each has its own ticket in [the split repo](https://github.com/pcierpiatka/s01e03-tenant-t3), with the count below.
+
+<Callout kind="warn">
+Three problems, three fixes. The one queued for #4471 fixes only the first.
+</Callout>
+
+## What the bodies show
+
+<ProblemTable ticket={4471} />
+
+### `parser` · the shared parser reads day-first dates month first
+
+Every tenant on file writes the day first. The shared parser reads every date month first,
+so 7 April becomes 4 July. This is the bug #4471 was opened for. It covers every channel and
+every tenant, and intake tags most of it right.
+
+### `hint` · booking-v3's form says MM/DD/YYYY and reads DD/MM
+
+Three tenants run booking-v3. Its date field tells people to type month first, then the
+form reads what they typed the tenant's way. The symptom is the same swap, but the fix is in
+the form, not the parser: the kb's own `causeOf` already keeps it apart, and the old page
+rendered it as "no ticket of its own". Now it has one. It only reaches us through the
+`form` channel at those three tenants.
+
+### `one-day` · bookings shift by one day, no month flip
+
+A small group of bodies show no swap at all: an invite a day before the booking, "Tuesday
+showed as Monday", a client in Lisbon and a client in Toronto holding the same meeting on
+different days, every June booking one day off. The desk's notes already read them as a
+one-day move but filed them under `parser` by tenant. They are not a date-order bug. They
+look like a timezone or day-boundary bug, and a parser fix will not touch them.
+
+## How we counted
+
+- One id, one report: the export has duplicate rows, and `uniqueById` keeps one per id.
+- A blind reader per tenant classified every body by what it says, seeing no tag and no note.
+- Where the body and the kb's rule disagreed, an adjudicator placed the report and a second
+  reader re-read it with a seeded sample of the rest.
+- Bodies with no dates at all were placed by the kb's rule for their tenant and channel.
+- The table above is computed from the id lists at render time. The same lists feed
+  `tools/counts.py`, which checks that every report is placed exactly once.
+
+## What to change
+
+- Split #4471: keep it for `parser`, open the two others. Done in the split repo.
+- Dedupe on cause, not subject, during incidents about dates: `sameCause` already exists.
+- Fix the booking-v3 hint text first. It is a one-line change and stops new `hint` reports.
+
+<RenderStamp {signature} />
