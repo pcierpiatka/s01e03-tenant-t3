@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · what it shows: three problems, not one'
 owner: pcierpiatka
-status: proposed
+status: closed
 reviewed: 2026-11-05
 signature: 'v1.eyJzdG9yeSI6Im9mZiIsInN1YiI6Ijg2NTciLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5Mzg5MjA0OCwiZXhwIjoxNzkzOTc4NDQ4fQ.wmuFLlMZ0aHvY-SDfnFjVgRfUNVtxqwgBKdZe6jW2QU'
 ---
@@ -18,7 +18,8 @@ Nobody had to read the bodies, so nobody did. We read all of them. The ticket ho
 Each has its own ticket in [the split repo](https://github.com/pcierpiatka/s01e03-tenant-t3), with the count below.
 
 <Callout kind="warn">
-Three problems, three fixes. The one queued for #4471 fixes only the first.
+Three problems, not one. The fix queued for #4471 covered only the first; the desk closed the
+second as won't fix (see the update below).
 </Callout>
 
 ## What the bodies show
@@ -65,10 +66,21 @@ them as their own problem so the fix is not lost in the footnote.
   `tools/counts.py`, which checks that `parser` and `hint` place every report exactly once and
   that every one-day report is filed under `parser`.
 
+## Desk update · #4471 closed 05 October
+
+<Callout>
+<strong>parser</strong> · fixed · <code>fix(dates): parse dd/mm for eu locales</code><br />
+<strong>hint</strong> · won't fix · booking-v3 form retired
+</Callout>
+
+Both tickets are closed in the split repo with these outcomes. The one-day reports close with
+the parser ticket they are filed under; their bodies still show a one-day shift, so if it comes
+back after the parser fix it needs a new ticket outside #4471.
+
 ## What to change
 
-- Split #4471: keep it for `parser`, open the two others. Done in the split repo.
 - Dedupe on cause, not subject, during incidents about dates: `sameCause` already exists.
-- Fix the booking-v3 hint text first. It is a one-line change and stops new `hint` reports.
+- Keep the one-day bodies in view: a parser fix does not explain a client in Lisbon and a
+  client in Toronto holding the same meeting on different days.
 
 <RenderStamp {signature} />
